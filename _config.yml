@@ -37,10 +37,10 @@ plugins:
   - jekyll-feed
 
 header_pages:
-  - md/universe.md
-  - md/autis.md
-  - md/panoramyx.md
-  - md/rcl.md
+  - md/universe/index.md
+  - md/autis/index.md
+  - md/panoramyx/index.md
+  - md/rcl/index.md
   - about.markdown
 
 # Exclude from processing.
