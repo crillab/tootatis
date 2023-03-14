@@ -1,0 +1,1 @@
+This is free software by Artois University and CNRS under both the Eclipse Public License and the GNU LGPL licence developed at CRIL.
