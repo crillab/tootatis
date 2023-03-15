@@ -5,3 +5,37 @@
 #tootatis-nav-label{
     display: inline;
 }
+
+.page-link {
+	position: unset;
+	display: unset;
+	padding: unset;
+	margin-left: unset;
+	background-color: unset;
+	border: unset;
+}
+
+.tootatis-software-h3{
+    font-size: 18px;
+    float: left;
+    display: block;
+    line-height: 36px;
+}
+
+.tootatis-software-tutorial-btn{
+    float: right;
+    display: block;
+}
+
+.wrapper{
+    max-width: 75%;
+}
+
+.tootatis-header-separator{
+    margin-bottom: 30px;
+    clear: both;
+}
+
+.tootatis-list{
+    margin-left: 0px;
+}
