@@ -38,10 +38,9 @@ plugins:
 
 header_pages:
   - md/universe/index.md
-  - md/autis/index.md
+  # - md/autis/index.md
   - md/panoramyx/index.md
-  - md/rcl/index.md
-  - about.markdown
+  # - md/rcl/index.md
 
 # Exclude from processing.
 # The following items will not be processed, by default.

@@ -5,9 +5,20 @@ layout: default
 <header class="post-header">
     <h1 class="post-title">{{ page.title | escape }}</h1>
     <h3 class="tootatis-software-h3">{{ page.name_description | escape }}</h3>
+    {% if page.technical_report %}
+    <a class="btn btn-secondary tootatis-software-tutorial-btn ml-3" href="{{ page.technical_report }}"><i
+            class="fas fa-file-pdf fa-fw"></i>Technical Report</a>
+    {% endif %}
     {% if page.tutorial %}
     <a class="btn btn-primary tootatis-software-tutorial-btn" href="{{ page.tutorial }}"><i
-            class="fas fa-graduation-cap"></i> Tutorial</a>
+            class="fas fa-graduation-cap fa-fw"></i>Tutorial</a>
+    {% endif %}
+    {% if page.badges %}
+        <div id="tootatis-badges">
+            {% for b in page.badges %}
+                <a href="{{ b.url }}"><img src="{{ b.img }}" alt="{{ b.alt }}"/></a>
+            {% endfor %}
+        </div>
     {% endif %}
 </header>
 
@@ -15,31 +26,133 @@ layout: default
 
 <div class="row justify-content-between">
     <div class="col-8">
-        <div class="card">
+        <div class="card mb-3">
             <div class="card-body">
-                {{page.description}}
+                {{content}}
             </div>
         </div>
 
-        <div class="card text-center">
-            <div class="card-header">
-              <ul class="nav nav-tabs card-header-tabs">
+        <div class="card mb-3">
+            {% assign first = true %}
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 {% for s in page.sources %}
-                <li class="nav-item">
-                  <a class="nav-link active" href="#">{{s.language}}</a>
-                </li>
+                {% if first %}
+                {% assign class = "nav-link active" %}
+                {% assign first = false %}
+                {% else %}
+                {% assign class = "nav-link" %}
+                {% endif %}
+                <button class="{{class}}" id="nav-{{s.slug_name}}-tab" data-toggle="tab" data-target="#{{s.slug_name}}"
+                    type="button" role="tab" aria-controls="{{s.slug_name}}"
+                    aria-selected="true">{{s.language}}</button>
                 {% endfor %}
-              </ul>
             </div>
-            {% for s in page.sources %}
+            <div class="tab-content p-3" id="nav-tabContent">
+                {% assign first = true %}
+                {% for s in page.sources %}
+                {% if first %}
+                {% assign class = "tab-pane fade show active" %}
+                {% assign first = false %}
+                {% else %}
+                {% assign class = "tab-pane fade show" %}
+                {% endif %}
+                <div class="{{class}}" id="{{s.slug_name}}" role="tabpanel" aria-labelledby="nav-{{s.slug_name}}-tab">
+                    {% for d in s.dependencies %}
+                    <p>{{d.description}}</p>
+                    <figure class="highlight">
+                        <pre><code class="language-{{d.type}}" data-lang="{{d.type}}">{{d.code | escape}}</code></pre>
+                    </figure>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% if page.publications %}
+        <div class="card mb-3">
+            <div class="card-header">
+                Publications
+            </div>
             <div class="card-body">
-              {% for d in s.dependencies %}  
-                {{d.code}}
-              {% endfor %}
+                <table id="publi-table" class="display table">
+                    <thead>
+                        <tr>
+                            <th class="col-1">Type</th>
+                            <th class="col-1">Year</th>
+                            <th class="col-3">Title</th>
+                            <th class="col-2">More</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in page.publications %}
+                        <tr>
+                            <td class="col-1">{{ p.type }}</td>
+                            <td class="col-1">{{ p.year }}</td>
+                            <td class="col-3">{{ p.title }}</td>
+                            <td class="col-2">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#{{p.id}}-abstract">
+                                    <i class="far fa-file-alt fa-fw"></i>Abstract
+                                </button>
+                                <button type="button" class="btn btn-secondary" data-toggle="modal"
+                                    data-target="#{{p.id}}-bibtex">
+                                    <i class="fas fa-quote-left fa-fw"></i>BibTex
+                                </button>
+                                <a type="button" class="btn btn-danger" href="{{p.pdf}}">
+                                    <i class="fas fa-file-pdf fa-fw"></i>PDF
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% for p in page.publications %}
+            <div class="modal fade" id="{{p.id}}-abstract" tabindex="-1" aria-labelledby="{{p.id}}-abstract-label"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="{{p.id}}-abstract-label">Abstract</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            {{p.abstract}}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="{{p.id}}-bibtex" tabindex="-1" aria-labelledby="{{p.id}}-bibtex-label"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="{{p.id}}-bibtex-label">BibTex</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <figure class="highlight">
+                                <pre><code class="language-latex" data-lang="latex">{{p.bibtex| escape}}</code></pre>
+                            </figure>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             {% endfor %}
-          </div>
-                    
+
+        </div>
+        {% endif %}
+
     </div>
     <div class="col-3">
         <div class="card mb-3">
@@ -49,13 +162,14 @@ layout: default
             <ul class="list-group list-group-flush tootatis-list">
                 {% for s in page.sources %}
                 <li class="list-group-item d-flex">
-                    <img class="card-img-left" alt="{{s.language}}" src="/assets/images/{{s.icon}}.svg" alt="Card image cap">
+                    <img class="card-img-left" alt="{{s.language}}" src="/assets/images/{{s.slug_name}}.svg"
+                        alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">{{s.language}}</h5>
                         <a href="https://github.com/crillab/{{s.github_project}}/" class="card-link"><i
                                 class="fab fa-github fa-fw"></i>Github</a>
                         <a href="https://crillab.github.io/{{s.github_project}}/" class="card-link"><i
-                                class="fas fa-book fa-fw"></i>Documentation</a>
+                                class="fas fa-book fa-fw"></i>API Documentation</a>
                     </div>
                 </li>
                 {% endfor %}
@@ -74,6 +188,8 @@ layout: default
                         <h5 class="card-title">{{i.title}}</h5>
                         <a href="https://github.com/crillab/{{i.github_project}}" class="card-link"><i
                                 class="fab fa-github fa-fw"></i>Github </a>
+                        <a href="https://crillab.github.io/{{i.github_project}}/" class="card-link"><i
+                                class="fas fa-book fa-fw"></i>API Documentation</a>
                     </div>
                 </li>
                 {% endfor %}
