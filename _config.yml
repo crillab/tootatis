@@ -26,7 +26,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   of tools for constraint programming based on Universe library.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: tootatis
+#twitter_username: tootatis
 github_username:  crillab
 #author: Thibault Falque 
 
@@ -38,9 +38,9 @@ plugins:
 
 header_pages:
   - md/universe/index.md
-  # - md/autis/index.md
+  - md/autis/index.md
   - md/panoramyx/index.md
-  # - md/rcl/index.md
+  - md/rcl/index.md
 
 # Exclude from processing.
 # The following items will not be processed, by default.
