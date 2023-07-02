@@ -20,7 +20,7 @@ badges:
 permalink: /universe/
 name_description: mUlti laNguage unIfied intErface foR conStraint solvErs
 sources:
-      - language: C++
+    - language: C++
       github_project: universe
       slug_name: cpp
       dependencies:
