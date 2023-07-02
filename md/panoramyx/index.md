@@ -11,19 +11,24 @@ badges:
       alt: LGPL3
 sources:
     - language: C++
-      github_project: panoramyx
+      github_project: autis
       slug_name: cpp
-      dependencies: 
-        - description: This library is designed for simplified use in projects using CMake. To use this project, it is possible to create a sub-module in your project with the following commands
+      dependencies:
+        - description: This library is designed for simplified use in projects using `CMake` and [`vcpkg`](https://vcpkg.io/en/) (with vcpkg_root is the path to your vcpkg install folder.) 
           type: bash
           code: |
-            git submodule add https://github.com/crillab/panoramyx libs/panoramyx
-            git submodule update --remote --recursive --init
-        - description: And then add the following instructions in your CMakeLists.txt file
-          type: cmake
+            git clone https://github.com/crillab/panoramyx
+            cd panoramyx 
+            cmake -S . -B build -D -DCMAKE_TOOLCHAIN_FILE=<vcpkg_root>/scripts/buildsystems/vcpkg.cmake"
+            cmake --build build
+        - description: You can also used vcpkg for integrate panoramyx to your project. We assume that you have configured the registry of `crillab`, see [here](https://crillab.github.io/tootatis/utility) for more information. Add `crillab-panoramyx` in your `vcpkg.json` file.
+          type: json
           code: |
-            add_subdirectory(libs/panoramyx)
-            target_link_libraries(your_executable panoramyx)
-#tutorial: tutorial.html
-#technical_report: tutorial.html
+            "dependencies": [
+                "crillab-panoramyx"
+                .....
+            ]
+tutorial: tutorial
 ---
+
+Panoramyx is a `C++` framework for solving constraint programming problems in parallel. 

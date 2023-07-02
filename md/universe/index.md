@@ -5,8 +5,8 @@ badges:
     - img: https://img.shields.io/badge/License-LGPL%20v3-blue.svg
       url: https://www.gnu.org/licenses/lgpl-3.0.en.html
       alt: LGPL3
-    - img: https://github.com/crillab/universe/actions/workflows/cmake.yml/badge.svg
-      url: https://github.com/crillab/universe/actions/workflows/cmake.yml
+    - img: https://github.com/crillab/universe/actions/workflows/ci.yml/badge.svg
+      url: https://github.com/crillab/universe/actions/workflows/ci.yml
       alt: CMake build
     - img: https://github.com/crillab/juniverse/actions/workflows/build-jar.yml/badge.svg
       url: https://github.com/crillab/juniverse/actions/workflows/build-jar.yml
@@ -20,20 +20,24 @@ badges:
 permalink: /universe/
 name_description: mUlti laNguage unIfied intErface foR conStraint solvErs
 sources:
-    - language: C++
+      - language: C++
       github_project: universe
       slug_name: cpp
       dependencies:
-        - description: This library is designed for simplified use in projects using CMake. To use this project, it is possible to create a sub-module in your project with the following commands
+        - description: This library is designed for simplified use in projects using `CMake` and [`vcpkg`](https://vcpkg.io/en/) (with vcpkg_root is the path to your vcpkg install folder. ) 
           type: bash
           code: |
-            git submodule add https://github.com/crillab/universe libs/universe
-            git submodule update --remote --recursive --init
-        - description: And then add the following instructions in your CMakeLists.txt file
-          type: cmake
+            git clone https://github.com/crillab/universe
+            cd universe 
+            cmake -S . -B build -D -DCMAKE_TOOLCHAIN_FILE=<vcpkg_root>/scripts/buildsystems/vcpkg.cmake"
+            cmake --build build
+        - description: You can also used vcpkg for integrate universe to your project. We assume that you have configured the registry of `crillab`, see [here](/utility) for more information. Add `crillab-universe` in your `vcpkg.json` file.
+          type: json
           code: |
-            add_subdirectory(libs/universe)
-            target_link_libraries(your_executable universe)
+            "dependencies": [
+                "crillab-universe"
+                .....
+            ]
     - language: Java
       github_project: juniverse
       slug_name: java
@@ -44,11 +48,11 @@ sources:
               <dependency>
                 <groupId>fr.cril</groupId>
                 <artifactId>juniverse</artifactId>
-                <version>0.1.16</version>
+                <version>0.2.13</version>
               </dependency>
         - description: Gradle
           type: gradle
-          code: "implementation group: 'fr.cril', name:'juniverse', version: '0.1.16'"
+          code: "implementation group: 'fr.cril', name:'juniverse', version: '0.2.13'"
     - language: C#
       github_project: CSUniverse
       slug_name: csharp
@@ -59,6 +63,9 @@ implementations:
     - title: Aceurancetourix (<a href="https://github.com/xcsp3team/ace/">ACE</a>)
       name: Aceurancetourix
       github_project: aceurancetourix
+    - title: Jolitorax (<a href="https://gitlab.ow2.org/sat4j/sat4j-csp-pb">Sat4j-CSP-PB</a>)
+      name: Jolitorax
+      url: https://gitlab.ow2.org/sat4j/sat4j-csp-pb/-/tree/juniverse?ref_type=heads
 # publications:
 #  - type: Technical Report
 #    year: 2023

@@ -13,6 +13,10 @@ layout: default
     <a class="btn btn-primary tootatis-software-tutorial-btn" href="{{ page.tutorial }}"><i
             class="fas fa-graduation-cap fa-fw"></i>Tutorial</a>
     {% endif %}
+    {% if page.registry %}
+    <a class="btn btn-primary tootatis-software-tutorial-btn" href="{{ page.registry }}"><i
+            class="fas fa-folder-cap fa-fw"></i>Browses packages</a>
+    {% endif %}
     {% if page.badges %}
         <div id="tootatis-badges">
             {% for b in page.badges %}
@@ -154,6 +158,7 @@ layout: default
         {% endif %}
 
     </div>
+    {% if page.sources %}
     <div class="col-lg-3 col-sm-12">
         <div class="card mb-3 col-12">
             <div class="card-header">
@@ -186,10 +191,15 @@ layout: default
                 <li class="list-group-item">
                     <div class="card-body">
                         <h5 class="card-title">{{i.title}}</h5>
+                        {% if i.github_project%}
                         <a href="https://github.com/crillab/{{i.github_project}}" class="card-link"><i
                                 class="fab fa-github fa-fw"></i>Github </a>
                         <a href="https://crillab.github.io/{{i.github_project}}/" class="card-link"><i
                                 class="fas fa-book fa-fw"></i>API Documentation</a>
+                        {%else%}
+                        <a href="{{i.url}}/" class="card-link"><i
+                            class="fas fa-book fa-fw"></i>Sources</a>
+                        {% endif %}
                     </div>
                 </li>
                 {% endfor %}
@@ -214,4 +224,5 @@ layout: default
         </div>
         {% endif %}
     </div>
+    {%endif%}
 </div>

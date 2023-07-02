@@ -7,24 +7,28 @@ badges:
     - img: https://img.shields.io/badge/License-LGPL%20v3-blue.svg
       url: https://www.gnu.org/licenses/lgpl-3.0.en.html
       alt: LGPL3
-    - img: https://github.com/crillab/autis/actions/workflows/cmake.yml/badge.svg
-      url: https://github.com/crillab/autis/actions/workflows/cmake.yml
+    - img: https://github.com/crillab/autis/actions/workflows/ci.yml/badge.svg
+      url: https://github.com/crillab/autis/actions/workflows/ci.yml
       alt: CMake build
 sources:
     - language: C++
       github_project: autis
       slug_name: cpp
       dependencies:
-        - description: This library is designed for simplified use in projects using CMake. To use this project, it is possible to create a sub-module in your project with the following commands
+        - description: This library is designed for simplified use in projects using `CMake` and [`vcpkg`](https://vcpkg.io/en/) (with vcpkg_root is the path to your vcpkg install folder. ) 
           type: bash
           code: |
-            git submodule add https://github.com/crillab/autis libs/autis
-            git submodule update --remote --recursive --init
-        - description: And then add the following instructions in your CMakeLists.txt file
-          type: cmake
+            git clone https://github.com/crillab/autis
+            cd autis 
+            cmake -S . -B build -D -DCMAKE_TOOLCHAIN_FILE=<vcpkg_root>/scripts/buildsystems/vcpkg.cmake"
+            cmake --build build
+        - description: You can also used vcpkg for integrate autis to your project. We assume that you have configured the registry of `crillab`, see [here](/utility) for more information. Add `crillab-autis` in your `vcpkg.json` file.
+          type: json
           code: |
-            add_subdirectory(libs/autis)
-            target_link_libraries(your_executable autis)
+            "dependencies": [
+                "crillab-autis"
+                .....
+            ]
 ---
 
 
