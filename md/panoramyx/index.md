@@ -19,7 +19,7 @@ sources:
           code: |
             git clone https://github.com/crillab/panoramyx
             cd panoramyx 
-            cmake -S . -B build -D -DCMAKE_TOOLCHAIN_FILE=<vcpkg_root>/scripts/buildsystems/vcpkg.cmake"
+            cmake -S . -B build -DCMAKE_TOOLCHAIN_FILE=<vcpkg_root>/scripts/buildsystems/vcpkg.cmake"
             cmake --build build
         - description: You can also used vcpkg for integrate panoramyx to your project. We assume that you have configured the registry of `crillab`, see [here](https://crillab.github.io/tootatis/utility) for more information. Add `crillab-panoramyx` in your `vcpkg.json` file.
           type: json

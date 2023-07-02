@@ -20,7 +20,7 @@ sources:
           code: |
             git clone https://github.com/crillab/autis
             cd autis 
-            cmake -S . -B build -D -DCMAKE_TOOLCHAIN_FILE=<vcpkg_root>/scripts/buildsystems/vcpkg.cmake"
+            cmake -S . -B build -DCMAKE_TOOLCHAIN_FILE=<vcpkg_root>/scripts/buildsystems/vcpkg.cmake"
             cmake --build build
         - description: You can also used vcpkg for integrate autis to your project. We assume that you have configured the registry of `crillab`, see [here](/utility) for more information. Add `crillab-autis` in your `vcpkg.json` file.
           type: json

@@ -62,7 +62,7 @@ layout: default
                 {% endif %}
                 <div class="{{class}}" id="{{s.slug_name}}" role="tabpanel" aria-labelledby="nav-{{s.slug_name}}-tab">
                     {% for d in s.dependencies %}
-                    <p>{{d.description}}</p>
+                    <p>{{d.description | markdownify }}</p>
                     <figure class="highlight">
                         <pre><code class="language-{{d.type}}" data-lang="{{d.type}}">{{d.code | escape}}</code></pre>
                     </figure>
